@@ -30,7 +30,6 @@ def webServer(port=13331):
             #Fill in end
 
             #Send the content of the requested file to the client
-            # connectionSocket.recv_into(len(outputdata))
             # for i in range(0, len(outputdata)):
             #     connectionSocket.send(outputdata[i].encode())
             connectionSocket.send(outputdata.encode())
