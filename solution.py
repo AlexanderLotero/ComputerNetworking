@@ -13,10 +13,10 @@ def webServer(port=13331):
 
     while True:
         #Establish the connection
-        print('Ready to serve...')
+        # print('Ready to serve...')
         connectionSocket, addr = serverSocket.accept()          # found in Python "socket" documentation
         # print(addr)
-        print("connection established")
+        # print("connection established")
         try:
             message = connectionSocket.recv(4096)               # found in Python "socket" documentation, "the value of bufsize should be a relatively small power of 2, for example, 4096"
             filename = message.split()[1]
