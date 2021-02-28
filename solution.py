@@ -1,5 +1,6 @@
 from socket import *
 
+
 # research included python socket documentation, python smtplib documentation,
 # and stack overflow for miscellaneous questions
 
