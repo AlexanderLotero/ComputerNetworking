@@ -5,7 +5,7 @@ from socket import *
 # and stack overflow for miscellaneous questions
 
 
-def smtp_client(port=1025, mailserver='127.0.0.1'.encode()):
+def smtp_client(port=1025, mailserver='127.0.0.1'):
 
     msg = "\r\n My message"
     endmsg = "\r\n.\r\n"
@@ -22,7 +22,7 @@ def smtp_client(port=1025, mailserver='127.0.0.1'.encode()):
     # Fill in end
 
     recv = clientSocket.recv(1024).decode()
-    print(recv)
+    # print(recv)
     # if recv[:3] != '220':
     #     print('220 reply not received from server.')
 
@@ -49,7 +49,7 @@ def smtp_client(port=1025, mailserver='127.0.0.1'.encode()):
     rcptToCommand = "RCPT TO <serverestination@example.com>\r\n"
     clientSocket.send(rcptToCommand.encode())
     recv3 = clientSocket.recv(1024).decode()
-    print("After RCPT TO command: " + recv3)
+    # print("After RCPT TO command: " + recv3)
     # if recv3[:3] != '250':
     #     print('250 reply not received from server.')
     # Fill in end
