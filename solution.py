@@ -4,6 +4,8 @@ import sys
 import struct
 import time
 import select
+from statistics import stdev
+from statistics import pstdev
 import binascii
 # Should use stdev
 
@@ -52,12 +54,15 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
         # Found by working backwards from sendOnePing function and utilizing the Python struct documentation
 
         # Fetch the ICMP header from the IP packet
-        header = recPacket[20:28]
-        type, code, checksum, id, sequence = struct.unpack('bbHHh', header)
+        ICMPheader = recPacket[20:28]
+        type, code, checksum, id, sequence = struct.unpack('bbHHh', ICMPheader)
+        IPheader = recPacket[8:9]
+
         if id == ID:
-            bytes = struct.calcsize('d')
-            timeOfSend = struct.unpack('d', recPacket[28:28 + bytes])[0]
+            bytes = struct.calcsize("d")
+            timeOfSend = struct.unpack("d", recPacket[28:28 + bytes])[0]
             return timeReceived - timeOfSend
+
         # else:
         #     return "ID doesn't match."
 
@@ -116,14 +121,25 @@ def ping(host, timeout=1):
     print("Pinging " + dest + " using Python:")
     print("")
     # Calculate vars values and return them
-    #  vars = [str(round(packet_min, 2)), str(round(packet_avg, 2)), str(round(packet_max, 2)),str(round(stdev(stdev_var), 2))]
+    # vars = [str(round(packet_min, 2)), str(round(packet_avg, 2)), str(round(packet_max, 2)),str(round(stdev(stdev_var), 2))]
+
+    delays = []
+
     # Send ping requests to a server separated by approximately one second
-    for i in range(0,4):
+    for i in range(0, 4):
         delay = doOnePing(dest, timeout)
-        print(delay)
+        # print(delay)
         time.sleep(1)  # one second
+        delays.append(delay)
+
+    packet_min = min(delays)
+    packet_max = max(delays)
+    packet_avg = sum(delays)/len(delays)
+    vars = [str(round(packet_min, 2)), str(round(packet_avg, 2)), str(round(packet_max, 2)),
+            str(round(stdev(delays), 2))]
+    # print(vars)
 
     return vars
 
 if __name__ == '__main__':
-    ping("google.co.il")
+    ping("74.6.143.26")
