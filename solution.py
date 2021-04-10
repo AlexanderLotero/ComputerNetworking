@@ -63,9 +63,6 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
             timeOfSend = struct.unpack("d", recPacket[28:28 + bytes])[0]
             return timeReceived - timeOfSend
 
-        # else:
-        #     return "ID doesn't match."
-
         # Fill in end
         timeLeft = timeLeft - howLongInSelect
         if timeLeft <= 0:
@@ -118,8 +115,8 @@ def doOnePing(destAddr, timeout):
 def ping(host, timeout=1):
     # timeout=1 means: If one second goes by without a reply from the server,  	# the client assumes that either the client's ping or the server's pong is lost
     dest = gethostbyname(host)
-    print("Pinging " + dest + " using Python:")
-    print("")
+    # print("Pinging " + dest + " using Python:")
+    # print("")
     # Calculate vars values and return them
     # vars = [str(round(packet_min, 2)), str(round(packet_avg, 2)), str(round(packet_max, 2)),str(round(stdev(stdev_var), 2))]
 
@@ -132,6 +129,7 @@ def ping(host, timeout=1):
         time.sleep(1)  # one second
         delays.append(delay)
 
+    # print(delays)
     packet_min = min(delays)
     packet_max = max(delays)
     packet_avg = sum(delays)/len(delays)
@@ -142,4 +140,4 @@ def ping(host, timeout=1):
     return vars
 
 if __name__ == '__main__':
-    ping("74.6.143.26")
+    ping("Google.co.jp")
