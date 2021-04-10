@@ -58,6 +58,8 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
             bytes = struct.calcsize('d')
             timeOfSend = struct.unpack('d', recPacket[28:28 + bytes])[0]
             return timeReceived - timeOfSend
+        else:
+            return "ID doesn't match."
 
         # Fill in end
         timeLeft = timeLeft - howLongInSelect
