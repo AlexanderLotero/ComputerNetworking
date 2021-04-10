@@ -133,8 +133,10 @@ def ping(host, timeout=1):
     packet_min = min(delays)
     packet_max = max(delays)
     packet_avg = sum(delays)/len(delays)
-    vars = [str(round(packet_min, 2)), str(round(packet_avg, 2)), str(round(packet_max, 2)),
-            str(round(pstdev(delays), 2))]
+    # vars = [str(round(packet_min, 2)), str(round(packet_avg, 2)), str(round(packet_max, 2)),
+    #         str(round(pstdev(delays), 2))]
+    vars = [round(packet_min, 2), round(packet_avg, 2), round(packet_max, 2),
+            round(pstdev(delays), 2)]
     # print(vars)
 
     return vars
