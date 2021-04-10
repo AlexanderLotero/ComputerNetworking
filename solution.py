@@ -124,4 +124,4 @@ def ping(host, timeout=1):
     return vars
 
 if __name__ == '__main__':
-    ping("8.8.8.89")
+    ping("google.co.il")
