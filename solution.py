@@ -56,13 +56,13 @@ def build_packet():
     data = struct.pack("d", time.time())
 
     # Append checksum to the header.
-    myChecksum = htons(checksum(header + data))
-    header = struct.pack("bbHHh", ICMP_ECHO_REQUEST, 0, myChecksum, id, 1)
+    activeChecksum = htons(checksum(header + data))
+    header = struct.pack("bbHHh", ICMP_ECHO_REQUEST, 0, activeChecksum, id, 1)
 
     # Don’t send the packet yet , just return the final packet in this function.
 
-    myChecksum = htons(checksum(header + data))
-    header = struct.pack("bbHHh", ICMP_ECHO_REQUEST, 0, myChecksum, id, 1)
+    activeChecksum = htons(checksum(header + data))
+    header = struct.pack("bbHHh", ICMP_ECHO_REQUEST, 0, activeChecksum, id, 1)
 
     #Fill in end
 
@@ -126,6 +126,7 @@ def get_route(hostname):
                 try: #try to fetch the hostname
                     #Fill in start
                     tracelist1.append(gethostbyaddr(str(addr[0]))[0])
+                    print('got here')
                     #Fill in end
                 except herror:   #if the host does not provide a hostname
                     #Fill in start
@@ -135,8 +136,7 @@ def get_route(hostname):
 
                 if types == 11:
                     bytes = struct.calcsize("d")
-                    timeSent = struct.unpack("d", recvPacket[28:28 +
-                    bytes])[0]
+                    timeSent = struct.unpack("d", recvPacket[28:28 + bytes])[0]
                     #Fill in start
                     #You should add your responses to your lists here
                     tracelist1.insert(-1, str(int((timeReceived - t) * 1000)) + "ms")
@@ -171,6 +171,7 @@ def get_route(hostname):
                 break
             finally:
                 mySocket.close()
+    # print(tracelist2)
     return (tracelist2)
 
 
