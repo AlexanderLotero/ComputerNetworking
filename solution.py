@@ -49,7 +49,7 @@ def build_packet():
     # packet to be sent was made, secondly the checksum was appended to the header and
     # then finally the complete packet was sent to the destination.
 
-    id = os.getpid() & 0xFFFF
+    id = os.getpid() & 0xffff
 
     # Make the header in a similar way to the ping exercise.
     header = struct.pack("bbHHh", ICMP_ECHO_REQUEST, 0, 0, id, 1)
@@ -66,10 +66,7 @@ def build_packet():
 
     #Fill in end
 
-
     # So the function ending should look like this
-
-
     packet = header + data
     return packet
 
@@ -142,14 +139,14 @@ def get_route(hostname):
                     bytes])[0]
                     #Fill in start
                     #You should add your responses to your lists here
-                    tracelist1.insert(-1, str(int((timeReceived - timeSent) * 1000)) + "ms")
+                    tracelist1.insert(-1, str(int((timeReceived - t) * 1000)) + "ms")
                     tracelist1.insert(-1, addr[0])
                     tracelist2.append(tracelist1)
                     #Fill in end
                 elif types == 3:
                     bytes = struct.calcsize("d")
                     timeSent = struct.unpack("d", recvPacket[28:28 + bytes])[0]
-                    tracelist1.insert(-1, str(int((timeReceived - timeSent) * 1000)) + "ms")
+                    tracelist1.insert(-1, str(int((timeReceived - t) * 1000)) + "ms")
                     tracelist1.insert(-1, addr[0])
                     tracelist2.append(tracelist1)
                     #Fill in start
@@ -163,8 +160,8 @@ def get_route(hostname):
                     tracelist1.insert(-1, str(int((timeSent - t) * 1000)) + "ms")
                     tracelist1.insert(-1, addr[0])
                     tracelist2.append(tracelist1)
-                    print(tracelist2)
-                    return tracelist2
+                    # print(tracelist2)
+                    # return tracelist2
                     #Fill in end
                 else:
                     #Fill in start
@@ -174,6 +171,8 @@ def get_route(hostname):
                 break
             finally:
                 mySocket.close()
+    return (tracelist2)
+
 
 if __name__ == '__main__':
     get_route("www.google.com")
